@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="ru">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Менторы | ProStart</title>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap">
+    <link rel="stylesheet" href="./styles/reset.css">
+    <link rel="stylesheet" href="./styles/main.css">
+    <style>
+        .mentors-content {
+            padding: 40px 0;
+            display: grid;
+            grid-template-columns: 280px 1fr;
+            gap: 40px;
+        }
+
+        .mentor-filter-sidebar {
+            padding: 20px;
+            height: fit-content;
+        }
+
+        .mentor-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 20px;
+        }
+
+        .mentor-card {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+            padding: 25px;
+            height: 100%;
+        }
+
+        .mentor-card__header {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .mentor-card__avatar {
+            font-size: 2rem;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background-color: #E6FFFA;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .mentor-card__name {
+            font-size: 1.3rem;
+            font-weight: 700;
+        }
+
+        .mentor-card__role {
+            font-size: 0.9rem;
+            color: var(--color-subtle-text);
+        }
+
+        .mentor-card__expertise-tag {
+            background-color: #FEEBCF;
+            color: #D69E2E;
+            padding: 4px 10px;
+            border-radius: 6px;
+            font-weight: 600;
+            font-size: 0.85rem;
+            width: fit-content;
+        }
+
+        .mentor-card__actions {
+            display: flex;
+            gap: 10px;
+            margin-top: auto;
+            /* Прижимает кнопки к низу */
+        }
+
+        @media (max-width: 900px) {
+            .mentors-content {
+                grid-template-columns: 1fr;
+                padding: 20px 20px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <header class="header">
+        <div class="container header__content">
+            <a href="/" class="header__logo">ProStart</a>
+            <nav class="header__nav" id="mainNav">
+                <ul class="header__nav-list">
+                    <li id="navCatalogItem"><a href="/catalog.html" class="header__nav-link">Биржа задач</a></li>
+                    <li id="navMentorsItem"><a href="/mentors.html" class="header__nav-link">Менторы</a></li>
+                    <li id="navProfileItem" style="display: none;"><a href="/profile.html" class="header__nav-link">Профиль</a></li>
+                    <li id="navMessengerItem" style="display: none;"><a href="/messenger.html" class="header__nav-link">Мессенджер</a></li>
+                </ul>
+            </nav>
+            <div class="header__auth-buttons" id="authButtons">
+                <a id="loginBtn" href="/log-in.html" class="button button--secondary">Вход</a>
+                <a id="signupBtn" href="/sign-up.html" class="button button--primary">Регистрация</a>
+                <button id="logoutBtn" onclick="logoutUser()" class="button button--secondary" style="display: none;">Выйти</button>
+            </div>
+        </div>
+    </header>
+
+    <main class="container mentors-content">
+        <aside class="mentor-filter-sidebar card">
+            <h2 style="font-size: 1.3rem; font-weight: 600; margin-bottom: 25px;">🔎 Найти ментора</h2>
+
+            <div class="form-group">
+                <label for="mentorSearch">Поиск по имени/специализации</label>
+                <input type="text" id="mentorSearch" placeholder="Имя или UI/UX">
+            </div>
+
+            <div class="form-group">
+                <label for="expertiseFilter">Экспертиза</label>
+                <select id="expertiseFilter">
+                    <option value="">Все области</option>
+                    <option value="Web Development">Web Development</option>
+                    <option value="UI/UX Design">UI/UX Design</option>
+                    <option value="Data Science">Data Science</option>
+                    <option value="Marketing">Marketing</option>
+                </select>
+            </div>
+
+            <p style="font-size: 0.8rem; color: var(--color-subtle-text); margin-top: 20px;">
+                Свяжитесь с профессионалом напрямую для консультации или наставничества.
+            </p>
+        </aside>
+
+        <section class="mentor-list-section">
+            <h1 style="font-size: 2rem; font-weight: 700; margin-bottom: 30px;">Сообщество Менторов</h1>
+            <div class="mentor-grid" id="mentorsList">
+            </div>
+        </section>
+    </main>
+
+    <footer class="footer">
+        <div class="container footer__content">
+            <div class="footer__logo">ProStart</div>
+            <div class="footer__links">
+                <a href="/catalog.html">Задачи</a>
+                <a href="#">Контакты</a>
+                <a href="#">Политика</a>
+            </div>
+            <p class="footer__copy">&copy; 2025 ProStart. Все права защищены.</p>
+        </div>
+    </footer>
+
+    <script src="./scripts/db.js"></script>
+    <script src="./scripts/auth.js"></script>
+    <script src="./scripts/mentors.js"></script>
+</body>
+
+</html>

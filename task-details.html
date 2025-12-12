@@ -1,0 +1,282 @@
+<!DOCTYPE html>
+<html lang="ru">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Детали задачи | ProStart</title>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap">
+    <link rel="stylesheet" href="./styles/reset.css">
+    <link rel="stylesheet" href="./styles/main.css">
+    <style>
+        .task-details-layout {
+            padding: 40px 0;
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+        .task-details-card {
+            margin-bottom: 30px;
+        }
+
+        .task-details__header {
+            margin-bottom: 30px;
+        }
+
+        .task-details__title {
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin-bottom: 10px;
+            color: var(--color-primary-dark);
+        }
+
+        .task-details__company {
+            font-size: 1.2rem;
+            color: var(--color-text);
+            font-weight: 500;
+            margin-bottom: 20px;
+        }
+
+        .task-details__meta {
+            display: flex;
+            gap: 15px;
+            margin-bottom: 30px;
+            flex-wrap: wrap;
+        }
+
+        .task-details__meta-item {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .task-details__meta-label {
+            font-weight: 600;
+            color: var(--color-subtle-text);
+        }
+
+        .task-details__meta-value {
+            padding: 6px 12px;
+            border-radius: 6px;
+            font-weight: 600;
+            font-size: 0.9rem;
+        }
+
+        .task-details__meta-value--direction {
+            background-color: #E6FFFA;
+            color: #319795;
+        }
+
+        .task-details__meta-value--level {
+            background-color: #FEEBCF;
+            color: #D69E2E;
+        }
+
+        .task-details__meta-value--status {
+            background-color: #C6F6D5;
+            color: #22543D;
+        }
+
+        .task-details__description {
+            line-height: 1.8;
+            color: var(--color-text);
+            font-size: 1.1rem;
+            margin-bottom: 30px;
+        }
+
+        .task-details__actions {
+            display: flex;
+            gap: 15px;
+            flex-wrap: wrap;
+        }
+
+        .back-button {
+            margin-bottom: 20px;
+        }
+    </style>
+</head>
+
+<body>
+    <header class="header">
+        <div class="container header__content">
+            <a href="/" class="header__logo">ProStart</a>
+            <nav class="header__nav" id="mainNav">
+                <ul class="header__nav-list">
+                    <li id="navCatalogItem"><a href="/catalog.html" class="header__nav-link">Биржа задач</a></li>
+                    <li id="navMentorsItem"><a href="/mentors.html" class="header__nav-link">Менторы</a></li>
+                    <li id="navProfileItem" style="display: none;"><a href="/profile.html" class="header__nav-link">Профиль</a></li>
+                    <li id="navMessengerItem" style="display: none;"><a href="/messenger.html" class="header__nav-link">Мессенджер</a></li>
+                </ul>
+            </nav>
+            <div class="header__auth-buttons" id="authButtons">
+                <a id="loginBtn" href="/log-in.html" class="button button--secondary">Вход</a>
+                <a id="signupBtn" href="/sign-up.html" class="button button--primary">Регистрация</a>
+                <button id="logoutBtn" onclick="logoutUser()" class="button button--secondary" style="display: none;">Выйти</button>
+            </div>
+        </div>
+    </header>
+
+    <main class="container task-details-layout">
+        <button class="button button--secondary back-button" onclick="window.history.back()">
+            ← Назад
+        </button>
+
+        <div class="task-details-card card" id="taskDetailsCard">
+            <div class="task-details__header">
+                <h1 class="task-details__title" id="taskTitle">Загрузка...</h1>
+                <p class="task-details__company" id="taskCompany">Загрузка...</p>
+                
+                <div class="task-details__meta">
+                    <div class="task-details__meta-item">
+                        <span class="task-details__meta-label">Направление:</span>
+                        <span class="task-details__meta-value task-details__meta-value--direction" id="taskDirection">-</span>
+                    </div>
+                    <div class="task-details__meta-item">
+                        <span class="task-details__meta-label">Уровень:</span>
+                        <span class="task-details__meta-value task-details__meta-value--level" id="taskLevel">-</span>
+                    </div>
+                    <div class="task-details__meta-item">
+                        <span class="task-details__meta-label">Статус:</span>
+                        <span class="task-details__meta-value task-details__meta-value--status" id="taskStatus">-</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="task-details__description" id="taskDescription">
+                Загрузка описания...
+            </div>
+
+            <div class="task-details__actions" id="taskActions">
+                <!-- Кнопки действий будут добавлены динамически -->
+            </div>
+        </div>
+    </main>
+
+    <footer class="footer">
+        <div class="container footer__content">
+            <div class="footer__logo">ProStart</div>
+            <div class="footer__links">
+                <a href="/catalog.html">Задачи</a>
+                <a href="#">Контакты</a>
+                <a href="#">Политика</a>
+            </div>
+            <p class="footer__copy">&copy; 2025 ProStart. Все права защищены.</p>
+        </div>
+    </footer>
+
+    <script src="./scripts/db.js"></script>
+    <script src="./scripts/auth.js"></script>
+    <script src="./scripts/tasks.js"></script>
+    <script>
+        function mapLevel(level) {
+            switch (level) {
+                case 'Junior': return 'Легчайший';
+                case 'Middle': return 'Легкий';
+                case 'Senior': return 'Средний';
+                default: return level;
+            }
+        }
+        function renderTaskDetails() {
+            const taskId = parseInt(localStorage.getItem('prostartViewTaskId'));
+            if (!taskId) {
+                alert('Задача не найдена.');
+                window.location.href = '/catalog.html';
+                return;
+            }
+
+            const tasks = getDBData(DB_KEYS.TASKS) || [];
+            const task = tasks.find(t => t.id === taskId);
+
+            if (!task) {
+                alert('Задача не найдена.');
+                window.location.href = '/catalog.html';
+                return;
+            }
+
+            // Заполняем данные задачи
+            document.getElementById('taskTitle').textContent = task.title;
+            document.getElementById('taskCompany').textContent = task.companyName;
+            document.getElementById('taskDirection').textContent = task.direction;
+            document.getElementById('taskLevel').textContent = mapLevel(task.level);
+            
+            const statusText = task.status === 'In Progress' ? 'В работе' : 'Открыта';
+            document.getElementById('taskStatus').textContent = statusText;
+            document.getElementById('taskDescription').textContent = task.description;
+
+            // Добавляем кнопки действий
+            const currentUser = getCurrentUser();
+            const actionsContainer = document.getElementById('taskActions');
+            actionsContainer.innerHTML = '';
+
+            if (currentUser) {
+                const isApplicant = task.applicants && Array.isArray(task.applicants) && task.applicants.includes(currentUser.id);
+                const isAssigned = task.assignedTo === currentUser.id;
+
+                // Кнопка отклика для студентов
+                if (currentUser.role === 'student') {
+                    if (isApplicant) {
+                        actionsContainer.innerHTML += `
+                            <button class="button button--secondary" disabled>Вы уже откликнулись</button>
+                        `;
+                    } else {
+                        actionsContainer.innerHTML += `
+                            <button class="button button--primary" onclick="applyToTaskFromDetails(${task.id})">
+                                Откликнуться на задачу
+                            </button>
+                        `;
+                    }
+                }
+
+                // Кнопка чата для откликнувшихся или назначенных
+                if (isApplicant || isAssigned) {
+                    actionsContainer.innerHTML += `
+                        <button class="button button--secondary" onclick="goToChat(${task.id})">
+                            Открыть чат
+                        </button>
+                    `;
+                }
+            } else {
+                actionsContainer.innerHTML += `
+                    <a href="/log-in.html" class="button button--primary">
+                        Войти для отклика
+                    </a>
+                `;
+            }
+        }
+
+        function applyToTaskFromDetails(taskId) {
+            if (!isAuthenticated()) {
+                alert('Для отклика необходимо авторизоваться.');
+                window.location.href = '/log-in.html';
+                return;
+            }
+
+            const currentUser = getCurrentUser();
+            if (currentUser.role !== 'student') {
+                alert('Откликаться на задачи могут только студенты.');
+                return;
+            }
+
+            const tasks = getDBData(DB_KEYS.TASKS);
+            const taskIndex = tasks.findIndex(t => t.id === taskId);
+
+            if (taskIndex !== -1 && !tasks[taskIndex].applicants.includes(currentUser.id)) {
+                tasks[taskIndex].applicants.push(currentUser.id);
+                setDBData(DB_KEYS.TASKS, tasks);
+                alert(`Вы успешно откликнулись на задачу "${tasks[taskIndex].title}"!`);
+                renderTaskDetails(); // Обновляем страницу
+            } else {
+                alert('Ошибка при отклике или вы уже откликнулись.');
+            }
+        }
+
+        window.addEventListener('load', () => {
+            renderTaskDetails();
+        });
+
+        window.applyToTaskFromDetails = applyToTaskFromDetails;
+    </script>
+</body>
+
+</html>
+

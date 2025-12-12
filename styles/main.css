@@ -1,0 +1,237 @@
+/* styles/main.css */
+
+/* === Переменные === */
+:root {
+    --color-primary: #4C51BF;
+    --color-primary-dark: #434190;
+    --color-text: #1A202C;
+    --color-subtle-text: #718096;
+    --color-border: #E5EAF1;
+    --color-bg-light: #FFFFFF;
+    --shadow-soft: 0 8px 20px rgba(2, 6, 23, 0.05);
+    --radius-card: 12px;
+    --radius-input: 8px;
+    --transition-speed: 0.2s;
+}
+
+/* === Общие Компоненты === */
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 20px;
+}
+
+.button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 12px 24px;
+    border-radius: var(--radius-input);
+    font-weight: 600;
+    transition: background-color var(--transition-speed), transform var(--transition-speed), box-shadow var(--transition-speed);
+}
+
+.button--primary {
+    background-color: var(--color-primary);
+    color: white;
+}
+
+.button--primary:hover {
+    background-color: var(--color-primary-dark);
+    transform: translateY(-1px);
+    box-shadow: var(--shadow-soft);
+}
+
+.button--secondary {
+    background-color: #EDF2F7;
+    color: var(--color-text);
+}
+
+.button--secondary:hover {
+    background-color: #E2E8F0;
+    transform: translateY(-1px);
+}
+
+.card {
+    background-color: var(--color-bg-light);
+    border-radius: var(--radius-card);
+    box-shadow: var(--shadow-soft);
+    padding: 30px;
+    border: 1px solid var(--color-border);
+    transition: box-shadow var(--transition-speed), transform var(--transition-speed);
+}
+
+.card:hover {
+    box-shadow: 0 10px 25px rgba(2, 6, 23, 0.1);
+}
+
+/* === Шапка (Header) === */
+.header {
+    background-color: var(--color-bg-light);
+    box-shadow: var(--shadow-soft);
+    position: sticky;
+    top: 0;
+    z-index: 100;
+}
+
+.header__content {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px 0;
+}
+
+.header__logo {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: var(--color-primary);
+}
+
+.header__nav-list {
+    display: flex;
+    gap: 30px;
+    list-style: none;
+}
+
+.header__nav-link {
+    font-weight: 500;
+    color: var(--color-subtle-text);
+    transition: color var(--transition-speed);
+}
+
+.header__nav-link:hover {
+    color: var(--color-primary);
+}
+
+.header__auth-buttons {
+    display: flex;
+    gap: 10px;
+}
+
+/* === Формы === */
+.form-card {
+    max-width: 450px;
+    margin: 80px auto;
+    padding: 40px;
+}
+
+.form-card__title {
+    font-size: 1.8rem;
+    font-weight: 700;
+    margin-bottom: 30px;
+    text-align: center;
+}
+
+.form-group {
+    margin-bottom: 20px;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 8px;
+    font-weight: 500;
+    font-size: 0.9rem;
+    color: var(--color-subtle-text);
+}
+
+.form-group input,
+.form-group select {
+    width: 100%;
+    padding: 12px 15px;
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-input);
+    font-size: 1rem;
+    transition: border-color var(--transition-speed), box-shadow var(--transition-speed);
+}
+
+.form-group input:focus,
+.form-group select:focus {
+    outline: none;
+    border-color: var(--color-primary);
+    box-shadow: 0 0 0 3px rgba(76, 81, 191, 0.1);
+}
+
+.mentor-avatar_img{
+    width: 50px;
+    
+}
+
+.footer {
+    background-color: var(--color-bg-light);
+    /* Светлый фон */
+    border-top: 1px solid var(--color-border);
+    /* Тонкая линия сверху */
+    padding: 40px 0;
+    margin-top: 60px;
+    /* Отделяем футер от основного контента */
+}
+
+.footer__content {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    /* Для адаптивности */
+    gap: 20px;
+}
+
+.footer__logo {
+    font-size: 1.4rem;
+    font-weight: 700;
+    color: var(--color-primary-dark);
+}
+
+.footer__links {
+    display: flex;
+    gap: 30px;
+}
+
+.footer__links a {
+    font-size: 0.95rem;
+    color: var(--color-subtle-text);
+    transition: color var(--transition-speed);
+}
+
+.footer__links a:hover {
+    color: var(--color-primary);
+}
+
+.footer__copy {
+    font-size: 0.85rem;
+    color: var(--color-subtle-text);
+}
+
+/* === Адаптивность футера === */
+@media (max-width: 768px) {
+    .footer__content {
+        flex-direction: column;
+        text-align: center;
+        gap: 25px;
+    }
+
+    .footer__links {
+        gap: 20px;
+    }
+
+    .footer__copy {
+        width: 100%;
+        order: 3;
+        /* Сдвигаем копирайт вниз */
+    }
+}
+
+/* === Адаптивность === */
+@media (max-width: 768px) {
+    .header__nav-list {
+        display: none;
+        /* Скрываем навигацию, можно заменить на бургер-меню */
+    }
+
+    .header__content {
+        padding: 10px 20px;
+    }
+
+    .container {
+        padding: 0 15px;
+    }
+}

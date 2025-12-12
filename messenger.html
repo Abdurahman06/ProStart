@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html lang="ru">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Мессенджер | ProStart</title>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap">
+    <link rel="stylesheet" href="./styles/reset.css">
+    <link rel="stylesheet" href="./styles/main.css">
+    <style>
+        .messenger-layout {
+            display: flex;
+            height: calc(100vh - 70px);
+            /* Высота минус высота шапки */
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px 0;
+            gap: 0;
+        }
+
+        .dialog-list {
+            flex-basis: 350px;
+            border-right: 1px solid var(--color-border);
+            overflow-y: auto;
+            background-color: var(--color-bg-light);
+            border-radius: var(--radius-card) 0 0 var(--radius-card);
+            box-shadow: var(--shadow-soft);
+        }
+
+        .dialog-list__item {
+            padding: 15px 20px;
+            cursor: pointer;
+            border-bottom: 1px solid #F0F4F8;
+            transition: background-color 0.1s;
+        }
+
+        .dialog-list__item:hover {
+            background-color: #F7FAFC;
+        }
+
+        .dialog-list__item--active {
+            background-color: var(--color-border);
+            border-left: 4px solid var(--color-primary);
+            padding-left: 16px;
+        }
+
+        .dialog-list__title {
+            font-weight: 600;
+            color: var(--color-text);
+        }
+
+        .dialog-list__subtitle {
+            font-size: 0.8rem;
+            color: var(--color-subtle-text);
+            margin-bottom: 5px;
+        }
+
+        .dialog-list__message-preview {
+            font-size: 0.9rem;
+            color: #718096;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .chat-area {
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+            background-color: #F7FAFC;
+            border-radius: 0 var(--radius-card) var(--radius-card) 0;
+            box-shadow: var(--shadow-soft);
+            overflow: hidden;
+        }
+
+        .chat-header {
+            padding: 15px 20px;
+            border-bottom: 1px solid var(--color-border);
+            font-size: 1.2rem;
+            font-weight: 600;
+            background-color: var(--color-bg-light);
+        }
+
+        .chat-window {
+            flex-grow: 1;
+            padding: 20px;
+            overflow-y: auto;
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        .chat-form {
+            padding: 15px 20px;
+            border-top: 1px solid var(--color-border);
+            background-color: var(--color-bg-light);
+            display: flex;
+            gap: 10px;
+        }
+
+        .chat-form input {
+            flex-grow: 1;
+            border: 1px solid var(--color-border);
+            border-radius: 20px;
+            padding: 10px 15px;
+        }
+
+        .chat-message {
+            max-width: 70%;
+            padding: 10px 15px;
+            border-radius: 15px;
+            line-height: 1.4;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+        }
+
+        .chat-message--self {
+            align-self: flex-end;
+            background-color: var(--color-primary);
+            color: white;
+            border-bottom-right-radius: 2px;
+        }
+
+        .chat-message--other {
+            align-self: flex-start;
+            background-color: #E2E8F0;
+            color: var(--color-text);
+            border-bottom-left-radius: 2px;
+        }
+
+        .chat-message__time {
+            font-size: 0.7rem;
+            opacity: 0.7;
+            margin-top: 5px;
+            text-align: right;
+        }
+
+        .chat-message__sender {
+            font-size: 0.8rem;
+            font-weight: 600;
+            margin-bottom: 3px;
+        }
+
+        @media (max-width: 768px) {
+            .messenger-layout {
+                flex-direction: column;
+                height: auto;
+            }
+
+            .dialog-list {
+                flex-basis: auto;
+                border-right: none;
+                border-bottom: 1px solid var(--color-border);
+                border-radius: var(--radius-card) var(--radius-card) 0 0;
+            }
+
+            .chat-area {
+                border-radius: 0 0 var(--radius-card) var(--radius-card);
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <header class="header">
+        <div class="container header__content">
+            <a href="/" class="header__logo">ProStart</a>
+            <nav class="header__nav" id="mainNav">
+                <ul class="header__nav-list">
+                    <li id="navCatalogItem"><a href="/catalog.html" class="header__nav-link">Биржа задач</a></li>
+                    <li id="navMentorsItem"><a href="/mentors.html" class="header__nav-link">Менторы</a></li>
+                    <li id="navProfileItem" style="display: none;"><a href="/profile.html" class="header__nav-link">Профиль</a></li>
+                    <li id="navMessengerItem" style="display: none;"><a href="/messenger.html" class="header__nav-link">Мессенджер</a></li>
+                </ul>
+            </nav>
+            <div class="header__auth-buttons" id="authButtons">
+                <a id="loginBtn" href="/log-in.html" class="button button--secondary">Вход</a>
+                <a id="signupBtn" href="/sign-up.html" class="button button--primary">Регистрация</a>
+                <button id="logoutBtn" onclick="logoutUser()" class="button button--secondary" style="display: none;">Выйти</button>
+            </div>
+        </div>
+    </header>
+
+    <main class="messenger-layout container">
+        <aside class="dialog-list">
+            <div
+                style="padding: 15px; font-weight: 700; border-bottom: 1px solid var(--color-border); font-size: 1.1rem;">
+                Диалоги
+            </div>
+            <div id="dialogsList">
+            </div>
+        </aside>
+
+        <section class="chat-area">
+            <div class="chat-header" id="chatHeader">Выберите диалог</div>
+            <div class="chat-window" id="chatWindow">
+            </div>
+            <form class="chat-form" id="sendMessageForm">
+                <input type="text" id="messageInput" placeholder="Введите сообщение..." required disabled>
+                <button type="submit" id="sendButton" class="button button--primary" disabled>
+                    Отправить
+                </button>
+            </form>
+        </section>
+    </main>
+
+    <footer class="footer">
+        <div class="container footer__content">
+            <div class="footer__logo">ProStart</div>
+            <div class="footer__links">
+                <a href="/catalog.html">Задачи</a>
+                <a href="#">Контакты</a>
+                <a href="#">Политика</a>
+            </div>
+            <p class="footer__copy">&copy; 2025 ProStart. Все права защищены.</p>
+        </div>
+    </footer>
+
+    <script src="./scripts/db.js"></script>
+    <script src="./scripts/auth.js"></script>
+    <script src="./scripts/chat.js"></script>
+</body>
+
+</html>

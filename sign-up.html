@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="ru">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Регистрация | ProStart</title>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap">
+    <link rel="stylesheet" href="./styles/reset.css">
+    <link rel="stylesheet" href="./styles/main.css">
+</head>
+
+<body>
+
+    <main>
+        <div class="form-card card">
+            <h1 class="form-card__title"> Присоединяйтесь к ProStart</h1>
+            <form id="registerForm">
+                <div class="form-group">
+                    <label for="name">ФИО / Название Компании</label>
+                    <input type="text" id="name" required placeholder="Иван Иванов">
+                </div>
+                <div class="form-group">
+                    <label for="email">Email</label>
+                    <input type="email" id="email" required placeholder="you@example.com">
+                </div>
+                <div class="form-group">
+                    <label for="password">Пароль</label>
+                    <input type="password" id="password" required placeholder="Введите пароль">
+                </div>
+                <div class="form-group">
+                    <label for="role">Ваша Роль</label>
+                    <select id="role" required>
+                        <option value="student">Студент</option>
+                        <option value="mentor">Ментор</option>
+                        <option value="company">Компания</option>
+                    </select>
+                </div>
+
+                <button type="submit" class="button button--primary" style="width: 100%; margin-top: 10px;">
+                    Зарегистрироваться
+                </button>
+            </form>
+            <p style="text-align: center; margin-top: 20px; font-size: 0.9rem;">
+                Уже есть аккаунт? <a href="/log-in.html"
+                    style="color: var(--color-primary); font-weight: 500;">Войти</a>
+            </p>
+        </div>
+    </main>
+
+    <script src="./scripts/db.js"></script>
+    <script src="./scripts/auth.js"></script>
+    <script>
+        document.getElementById('registerForm').addEventListener('submit', function (e) {
+            e.preventDefault();
+            const name = document.getElementById('name').value;
+            const email = document.getElementById('email').value;
+            const password = document.getElementById('password').value;
+            const role = document.getElementById('role').value;
+
+            registerUser(name, email, password, role);
+        });
+    </script>
+</body>
+
+</html>

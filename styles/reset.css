@@ -1,0 +1,38 @@
+/* styles/reset.css */
+*,
+*::before,
+*::after {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: 'Inter', sans-serif;
+    /* Предположим, что Inter подключен */
+    line-height: 1.6;
+    color: #1A202C;
+    background-color: #F7FAFC;
+    min-height: 100vh;
+}
+
+a {
+    text-decoration: none;
+    color: inherit;
+}
+
+button {
+    border: none;
+    background: none;
+    cursor: pointer;
+}
+
+input,
+textarea {
+    font-family: inherit;
+    font-size: 100%;
+    line-height: 1.15;
+    margin: 0;
+}
+
+/* Дополнительно: подключите шрифт Inter в HTML, например, через Google Fonts */

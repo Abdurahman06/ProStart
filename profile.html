@@ -1,0 +1,355 @@
+<!DOCTYPE html>
+<html lang="ru">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Профиль | ProStart</title>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap">
+    <link rel="stylesheet" href="./styles/reset.css">
+    <link rel="stylesheet" href="./styles/main.css">
+    <style>
+        .profile-layout {
+            padding: 40px 0;
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+        .profile-card {
+            display: flex;
+            gap: 40px;
+        }
+
+        .profile-info {
+            flex-grow: 1;
+        }
+
+        .profile-info h1 {
+            font-size: 2.5rem;
+            font-weight: 800;
+            margin-bottom: 10px;
+        }
+
+        .profile-info p {
+            font-size: 1.1rem;
+            color: var(--color-subtle-text);
+            margin-bottom: 5px;
+        }
+
+        .section-tasks {
+            margin-top: 40px;
+        }
+
+        .section-tasks h2 {
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin-bottom: 20px;
+        }
+
+        .task-list {
+            list-style: none;
+            padding: 0;
+        }
+
+        .premium-modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.6);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 1000;
+            padding: 20px;
+        }
+
+        .premium-modal__content {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            border-radius: 20px;
+            padding: 30px;
+            max-width: 500px;
+            width: 100%;
+            max-height: 90vh;
+            overflow-y: auto;
+            color: white;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            position: relative;
+        }
+
+        .premium-modal__close {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            background: rgba(255, 255, 255, 0.2);
+            border: none;
+            color: white;
+            font-size: 1.5rem;
+            width: 35px;
+            height: 35px;
+            border-radius: 50%;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: background 0.3s;
+        }
+
+        .premium-modal__close:hover {
+            background: rgba(255, 255, 255, 0.3);
+        }
+
+        .premium-modal__title {
+            font-size: 1.75rem;
+            font-weight: 700;
+            margin-bottom: 8px;
+            text-align: center;
+        }
+
+        .premium-modal__subtitle {
+            font-size: 0.9rem;
+            opacity: 0.9;
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .premium-modal__benefits {
+            list-style: none;
+            padding: 0;
+            margin: 0 0 20px 0;
+        }
+
+        .premium-modal__benefit {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 15px;
+            font-size: 1rem;
+        }
+
+        .premium-modal__benefit-icon {
+            width: 35px;
+            height: 35px;
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+            font-size: 1.3rem;
+        }
+
+        .premium-modal__price {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .premium-modal__price-amount {
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin-bottom: 5px;
+        }
+
+        .premium-modal__price-period {
+            font-size: 0.9rem;
+            opacity: 0.9;
+        }
+
+        .premium-modal__button {
+            width: 100%;
+            padding: 12px;
+            background: white;
+            color: #667eea;
+            border: none;
+            border-radius: 10px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+
+        .premium-modal__button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+        }
+    </style>
+</head>
+
+<body>
+    <header class="header">
+        <div class="container header__content">
+            <a href="/" class="header__logo">ProStart</a>
+            <nav class="header__nav" id="mainNav">
+                <ul class="header__nav-list">
+                    <li id="navCatalogItem"><a href="/catalog.html" class="header__nav-link">Биржа задач</a></li>
+                    <li id="navMentorsItem"><a href="/mentors.html" class="header__nav-link">Менторы</a></li>
+                    <li id="navProfileItem" style="display: none;"><a href="/profile.html" class="header__nav-link">Профиль</a></li>
+                    <li id="navMessengerItem" style="display: none;"><a href="/messenger.html" class="header__nav-link">Мессенджер</a></li>
+                </ul>
+            </nav>
+            <div class="header__auth-buttons" id="authButtons">
+                <a id="loginBtn" href="/log-in.html" class="button button--secondary">Вход</a>
+                <a id="signupBtn" href="/sign-up.html" class="button button--primary">Регистрация</a>
+                <button id="logoutBtn" onclick="logoutUser()" class="button button--secondary" style="display: none;">Выйти</button>
+            </div>
+        </div>
+    </header>
+
+    <main class="container profile-layout">
+
+        <section class="profile-card card">
+            <div id="profileAvatar"
+                style="width: 120px; height: 120px; border-radius: 50%; background-color: #E2E8F0; display: flex; align-items: center; justify-content: center; font-size: 3rem; color: #718096;">
+                <img class="student-avatar_img" style="width: 50px;" src="/assets/images/free-icon-hacker-924915.png" alt="">
+            </div>
+
+            <div class="profile-info">
+                <div id="profileView">
+                    <h1 id="profileName">Загрузка...</h1>
+                    <p id="profileRole" style="font-weight: 600; color: var(--color-primary);"></p>
+                    <p id="profileEmail"></p>
+                    <p id="studentLevel" style="display: none; font-weight: 600; color: var(--color-primary); margin-top: 5px;"></p>
+                    <p id="mentorExpertise" style="display: none;"></p>
+
+                    <div style="display: flex; gap: 10px; margin-top: 20px; flex-wrap: wrap;">
+                        <button class="button button--primary" onclick="toggleEditProfile()">
+                            Редактировать профиль
+                        </button>
+                        <button id="premiumButton" class="button" style="display: none; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; border: none;" onclick="openPremiumModal()">
+                            ⭐ Оформить Premium подписку
+                        </button>
+                        <button class="button button--secondary" onclick="logoutUser()">
+                            Выйти из аккаунта
+                        </button>
+                    </div>
+                </div>
+
+                <div id="profileEdit" style="display: none;">
+                    <form id="editProfileForm" onsubmit="saveProfileChanges(event)">
+                        <div class="form-group">
+                            <label for="editName">Имя / Название компании</label>
+                            <input type="text" id="editName" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="editEmail">Email</label>
+                            <input type="email" id="editEmail" required>
+                        </div>
+                        <div class="form-group" id="editExpertiseGroup" style="display: none;">
+                            <label for="editExpertise">Экспертиза (для менторов)</label>
+                            <input type="text" id="editExpertise" placeholder="Например: UI/UX Design">
+                        </div>
+                        <div style="display: flex; gap: 10px; margin-top: 20px;">
+                            <button type="submit" class="button button--primary">Сохранить</button>
+                            <button type="button" class="button button--secondary" onclick="toggleEditProfile()">Отмена</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </section>
+
+        <section class="section-tasks">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
+                <h2 id="taskListTitle">Задачи</h2>
+                <button id="publishTaskButton" class="button button--primary" style="display: none;">
+                    Опубликовать новую задачу
+                </button>
+            </div>
+            
+            <div id="taskFormContainer" style="display: none; margin-bottom: 30px;">
+                <form id="createTaskForm" class="card" style="padding: 20px;">
+                    <h3 style="margin-bottom: 20px;">Новая задача</h3>
+                    <div class="form-group">
+                        <label for="taskTitle">Название задачи *</label>
+                        <input type="text" id="taskTitle" required placeholder="Например: Разработать лендинг">
+                    </div>
+                    <div class="form-group">
+                        <label for="taskDescription">Описание *</label>
+                        <textarea id="taskDescription" required rows="5" placeholder="Подробное описание задачи..."></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label for="taskDirection">Направление *</label>
+                        <select id="taskDirection" required>
+                            <option value="">Выберите направление</option>
+                            <option value="Web Development">Web Development</option>
+                            <option value="UI/UX Design">UI/UX Design</option>
+                            <option value="Marketing">Marketing</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="taskLevel">Уровень сложности *</label>
+                        <select id="taskLevel" required>
+                            <option value="">Выберите уровень</option>
+                            <option value="Легчайший">Легчайший</option>
+                            <option value="Легкий">Легкий</option>
+                            <option value="Средний">Средний</option>
+                            <option value="Сложный">Сложный</option>
+                        </select>
+                    </div>
+                    <div style="display: flex; gap: 10px;">
+                        <button type="submit" class="button button--primary">Опубликовать</button>
+                        <button type="button" class="button button--secondary" onclick="document.getElementById('taskFormContainer').style.display = 'none'; document.getElementById('publishTaskButton').textContent = 'Опубликовать новую задачу';">Отмена</button>
+                    </div>
+                </form>
+            </div>
+            
+            <ul class="task-list" id="completedTasksList">
+            </ul>
+        </section>
+    </main>
+
+    <!-- Premium Modal -->
+    <div id="premiumModal" class="premium-modal" style="display: none;">
+        <div class="premium-modal__content">
+            <button class="premium-modal__close" onclick="closePremiumModal()">×</button>
+            <h2 class="premium-modal__title">⭐ Premium подписка</h2>
+            <p class="premium-modal__subtitle">Откройте все возможности платформы</p>
+            
+            <ul class="premium-modal__benefits">
+                <li class="premium-modal__benefit">
+                    <div class="premium-modal__benefit-icon">📁</div>
+                    <span>Получать реальные кейсы в портфолио</span>
+                </li>
+                <li class="premium-modal__benefit">
+                    <div class="premium-modal__benefit-icon">💰</div>
+                    <span>Зарабатывать на выполнении заданий</span>
+                </li>
+                <li class="premium-modal__benefit">
+                    <div class="premium-modal__benefit-icon">👨‍🏫</div>
+                    <span>Улучшать навыки с помощью менторов</span>
+                </li>
+                <li class="premium-modal__benefit">
+                    <div class="premium-modal__benefit-icon">📈</div>
+                    <span>Повышать профессиональный уровень и рейтинг</span>
+                </li>
+            </ul>
+
+            <div class="premium-modal__price">
+                <div class="premium-modal__price-amount">499₽</div>
+                <div class="premium-modal__price-period">в месяц</div>
+            </div>
+
+            <button class="premium-modal__button" onclick="subscribePremium()">
+                Оформить подписку
+            </button>
+        </div>
+    </div>
+
+    <footer class="footer">
+        <div class="container footer__content">
+            <div class="footer__logo">ProStart</div>
+            <div class="footer__links">
+                <a href="/catalog.html">Задачи</a>
+                <a href="#">Контакты</a>
+                <a href="#">Политика</a>
+            </div>
+            <p class="footer__copy">&copy; 2025 ProStart. Все права защищены.</p>
+        </div>
+    </footer>
+
+    <script src="./scripts/db.js"></script>
+    <script src="./scripts/auth.js"></script>
+    <script src="./scripts/profile.js"></script>
+</body>
+
+</html>

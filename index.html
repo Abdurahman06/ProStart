@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="ru">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ProStart: Реальные задачи — Реальный опыт</title>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap">
+    <link rel="stylesheet" href="./styles/reset.css">
+    <link rel="stylesheet" href="./styles/main.css">
+</head>
+
+<body>
+
+    <header class="header">
+        <div class="container header__content">
+            <a href="/" class="header__logo">ProStart</a>
+            <nav class="header__nav" id="mainNav">
+                <ul class="header__nav-list">
+                    <li id="navCatalogItem"><a href="/catalog.html" class="header__nav-link">Биржа задач</a></li>
+                    <li id="navMentorsItem"><a href="/mentors.html" class="header__nav-link">Менторы</a></li>
+                    <li id="navProfileItem" style="display: none;"><a href="/profile.html" class="header__nav-link">Профиль</a></li>
+                    <li id="navMessengerItem" style="display: none;"><a href="/messenger.html" class="header__nav-link">Мессенджер</a></li>
+                </ul>
+            </nav>
+            <div class="header__auth-buttons" id="authButtons">
+                <a id="loginBtn" href="/log-in.html" class="button button--secondary">Вход</a>
+                <a id="signupBtn" href="/sign-up.html" class="button button--primary">Регистрация</a>
+                <button id="logoutBtn" onclick="logoutUser()" class="button button--secondary" style="display: none;">Выйти</button>
+            </div>
+        </div>
+    </header>
+
+    <main>
+        <section class="hero">
+            <div class="container" style="background-image: url(assets/images/hero_img.webp); background-size: cover; text-align: center; padding: 100px 20px;">
+                <h1 style="font-size: 3rem; font-weight: 700; margin-bottom: 20px;">
+                    Реальные задачи — реальный опыт
+                </h1>
+                <p style="font-size: 1.25rem; color: var(--color-text); max-width: 600px; margin: 0 auto 40px;">
+                    Получайте задания от компаний Симферополя, работайте с менторами и стройте портфолио для успешного
+                    старта карьеры.
+                </p>
+                <div style="display: flex; justify-content: center; gap: 20px;">
+                    <a href="/sign-up.html" class="button button--primary button--large"
+                        style="padding: 15px 30px;">Начать сейчас</a>
+                    <a href="/catalog.html" class="button button--secondary button--large"
+                        style="padding: 15px 30px;">Посмотреть задачи</a>
+                </div>
+            </div>
+        </section>
+
+        <section class="section" style="padding: 60px 0;">
+            <div class="container">
+                <h2 style="font-size: 2rem; font-weight: 700; text-align: center; margin-bottom: 50px;">
+                    Почему ProStart?
+                </h2>
+                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 30px;">
+                    <div class="card" style="text-align: center; padding: 30px;">
+                        <div style="width: 120px; height: 120px; margin: 0 auto 20px; border-radius: 20px; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); display: flex; align-items: center; justify-content: center; box-shadow: 0 10px 30px rgba(102, 126, 234, 0.3);">
+                            <svg width="70" height="70" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M14 2H6C5.46957 2 4.96086 2.21071 4.58579 2.58579C4.21071 2.96086 4 3.46957 4 4V20C4 20.5304 4.21071 21.0391 4.58579 21.4142C4.96086 21.7893 5.46957 22 6 22H18C18.5304 22 19.0391 21.7893 19.4142 21.4142C19.7893 21.0391 20 20.5304 20 20V8L14 2Z" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                <path d="M14 2V8H20" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                <path d="M16 13H8" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                <path d="M16 17H8" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                <path d="M10 9H8" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                            </svg>
+                        </div>
+                        <h3 style="font-size: 1.25rem; font-weight: 600; margin-bottom: 10px;">
+                            Реальные Задачи
+                        </h3>
+                        <p style="color: var(--color-subtle-text);">
+                            Никаких учебных проектов. Только актуальные задачи от бизнеса.
+                        </p>
+                    </div>
+                    <div class="card" style="text-align: center; padding: 30px;">
+                        <div style="width: 120px; height: 120px; margin: 0 auto 20px; border-radius: 20px; background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%); display: flex; align-items: center; justify-content: center; box-shadow: 0 10px 30px rgba(245, 87, 108, 0.3);">
+                            <svg width="70" height="70" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M17 21V19C17 17.9391 16.5786 16.9217 15.8284 16.1716C15.0783 15.4214 14.0609 15 13 15H5C3.93913 15 2.92172 15.4214 2.17157 16.1716C1.42143 16.9217 1 17.9391 1 19V21" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                <path d="M9 11C11.2091 11 13 9.20914 13 7C13 4.79086 11.2091 3 9 3C6.79086 3 5 4.79086 5 7C5 9.20914 6.79086 11 9 11Z" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                <path d="M23 21V19C22.9993 18.1137 22.7044 17.2528 22.1614 16.5523C21.6184 15.8519 20.8581 15.3516 20 15.13" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                <path d="M16 3.13C16.8604 3.35031 17.623 3.85071 18.1676 4.55232C18.7122 5.25392 19.0078 6.11683 19.0078 7.005C19.0078 7.89318 18.7122 8.75608 18.1676 9.45769C17.623 10.1593 16.8604 10.6597 16 10.88" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                            </svg>
+                        </div>
+                        <h3 style="font-size: 1.25rem; font-weight: 600; margin-bottom: 10px;">
+                            Опытные Менторы
+                        </h3>
+                        <p style="color: var(--color-subtle-text);">
+                            Поддержка и обратная связь от профессионалов в вашей сфере.
+                        </p>
+                    </div>
+                    <div class="card" style="text-align: center; padding: 30px;">
+                        <div style="width: 120px; height: 120px; margin: 0 auto 20px; border-radius: 20px; background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%); display: flex; align-items: center; justify-content: center; box-shadow: 0 10px 30px rgba(79, 172, 254, 0.3);">
+                            <svg width="70" height="70" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M9 12L11 14L15 10" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                <path d="M21 12C21 16.9706 16.9706 21 12 21C7.02944 21 3 16.9706 3 12C3 7.02944 7.02944 3 12 3C16.9706 3 21 7.02944 21 12Z" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                <path d="M9 3V7" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                <path d="M15 3V7" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                <path d="M9 17V21" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                <path d="M15 17V21" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                <path d="M3 9H7" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                <path d="M3 15H7" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                <path d="M17 9H21" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                <path d="M17 15H21" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                            </svg>
+                        </div>
+                        <h3 style="font-size: 1.25rem; font-weight: 600; margin-bottom: 10px;">
+                            Портфолио
+                        </h3>
+                        <p style="color: var(--color-subtle-text);">
+                            Каждая выполненная задача — весомый аргумент в вашем резюме.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="cta-section" style="padding: 80px 0; background-color: var(--color-primary); margin: 50px 0;">
+            <div class="container" style="text-align: center; color: white;">
+                <h2 style="font-size: 2.2rem; font-weight: 700; margin-bottom: 15px;">
+                    Готовы начать карьеру?
+                </h2>
+                <p style="font-size: 1.1rem; margin-bottom: 30px;">
+                    Присоединяйтесь к сообществу ProStart прямо сейчас.
+                </p>
+                <a href="/sign-up.html" class="button button--secondary"
+                    style="background-color: white; color: var(--color-primary);">
+                    Зарегистрироваться бесплатно
+                </a>
+            </div>
+        </section>
+
+    </main>
+
+    <footer class="footer">
+        <div class="container footer__content">
+            <div class="footer__logo">ProStart</div>
+            <div class="footer__links">
+                <a href="/catalog.html">Задачи</a>
+                <a href="#">Контакты</a>
+                <a href="#">Политика</a>
+            </div>
+            <p class="footer__copy">&copy; 2025 ProStart. Все права защищены.</p>
+        </div>
+    </footer>
+
+    <script src="./scripts/db.js"></script>
+    <script src="./scripts/auth.js"></script>
+</body>
+
+</html>

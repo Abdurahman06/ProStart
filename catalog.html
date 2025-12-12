@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html lang="ru">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Биржа Задач | ProStart</title>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap">
+    <link rel="stylesheet" href="./styles/reset.css">
+    <link rel="stylesheet" href="./styles/main.css">
+    <style>
+        .page-content {
+            display: grid;
+            grid-template-columns: 280px 1fr;
+            gap: 40px;
+            padding: 40px 0;
+        }
+
+        .filter-sidebar {
+            /* Используем card для стиля сайдбара */
+            padding: 20px;
+        }
+
+        .filter-sidebar__title {
+            font-size: 1.3rem;
+            font-weight: 600;
+            margin-bottom: 25px;
+        }
+
+        .filter-group {
+            margin-bottom: 25px;
+        }
+
+        .filter-group label {
+            font-weight: 500;
+            display: block;
+            margin-bottom: 8px;
+        }
+
+        .task-list {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        .task-card {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        .task-card__header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+        }
+
+        .task-card__title {
+            font-size: 1.4rem;
+            font-weight: 700;
+            color: var(--color-primary-dark);
+        }
+
+        .task-card__info {
+            display: flex;
+            gap: 15px;
+            font-size: 0.9rem;
+            color: var(--color-subtle-text);
+        }
+
+        .task-card__actions {
+            display: flex;
+            gap: 10px;
+            margin-top: 15px;
+            justify-content: flex-end;
+        }
+
+        .task-card__direction,
+        .task-card__level {
+            padding: 4px 10px;
+            border-radius: 6px;
+            font-weight: 600;
+            font-size: 0.8rem;
+        }
+
+        .task-card__direction {
+            background-color: #E6FFFA;
+            color: #319795;
+        }
+
+        .task-card__level {
+            background-color: #FEEBCF;
+            color: #D69E2E;
+        }
+
+        @media (max-width: 900px) {
+            .page-content {
+                grid-template-columns: 1fr;
+            }
+
+            .filter-sidebar {
+                margin: 0 20px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <header class="header">
+        <div class="container header__content">
+            <a href="/" class="header__logo">ProStart</a>
+            <nav class="header__nav" id="mainNav">
+                <ul class="header__nav-list">
+                    <li id="navCatalogItem"><a href="/catalog.html" class="header__nav-link">Биржа задач</a></li>
+                    <li id="navMentorsItem"><a href="/mentors.html" class="header__nav-link">Менторы</a></li>
+                    <li id="navProfileItem" style="display: none;"><a href="/profile.html" class="header__nav-link">Профиль</a></li>
+                    <li id="navMessengerItem" style="display: none;"><a href="/messenger.html" class="header__nav-link">Мессенджер</a></li>
+                </ul>
+            </nav>
+            <div class="header__auth-buttons" id="authButtons">
+                <a id="loginBtn" href="/log-in.html" class="button button--secondary">Вход</a>
+                <a id="signupBtn" href="/sign-up.html" class="button button--primary">Регистрация</a>
+                <button id="logoutBtn" onclick="logoutUser()" class="button button--secondary" style="display: none;">Выйти</button>
+            </div>
+        </div>
+    </header>
+
+    <main class="container page-content">
+        <aside class="filter-sidebar card">
+            <h2 class="filter-sidebar__title">Фильтры задач</h2>
+
+            <div class="form-group">
+                <label for="search">Поиск по названию</label>
+                <input type="text" id="search" placeholder="Ключевое слово..." oninput="filterTasks()">
+            </div>
+
+            <div class="form-group">
+                <label for="direction">Направление</label>
+                <select id="direction" onchange="filterTasks()">
+                    <option value="">Все направления</option>
+                    <option value="Web Development">Web Development</option>
+                    <option value="UI/UX Design">UI/UX Design</option>
+                    <option value="Marketing">Marketing</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label for="level">Уровень</label>
+                <select id="level" onchange="filterTasks()">
+                    <option value="">Все уровни</option>
+                    <option value="Легчайший">Легчайший</option>
+                    <option value="Легкий">Легкий</option>
+                    <option value="Средний">Средний</option>
+                    <option value="Сложный">Сложный</option>
+                </select>
+            </div>
+
+            <a href="/mentors.html" class="button button--secondary" style="width: 100%; margin-top: 10px;" id="findMentorButton">
+                Найти ментора
+            </a>
+            <script>
+                // Обновляем текст кнопки для студентов
+                document.addEventListener('DOMContentLoaded', function() {
+                    const currentUser = getCurrentUser();
+                    const findMentorButton = document.getElementById('findMentorButton');
+                    if (findMentorButton && currentUser && currentUser.role === 'student') {
+                        findMentorButton.textContent = 'Найти задачу';
+                        findMentorButton.href = '/catalog.html';
+                    }
+                });
+            </script>
+        </aside>
+
+        <section class="task-list-section">
+            <h1 style="font-size: 2rem; font-weight: 700; margin-bottom: 30px;">Биржа Задач</h1>
+            <div class="task-list" id="taskList">
+                <p id="noTasksMessage" style="color: var(--color-subtle-text); display: none;">
+                    Задач по вашему запросу не найдено.
+                </p>
+            </div>
+        </section>
+    </main>
+
+    <footer class="footer">
+        <div class="container footer__content">
+            <div class="footer__logo">ProStart</div>
+            <div class="footer__links">
+                <a href="/catalog.html">Задачи</a>
+                <a href="#">Контакты</a>
+                <a href="#">Политика</a>
+            </div>
+            <p class="footer__copy">&copy; 2025 ProStart. Все права защищены.</p>
+        </div>
+    </footer>
+
+    <script src="./scripts/db.js"></script>
+    <script src="./scripts/auth.js"></script>
+    <script src="./scripts/tasks.js"></script>
+    <script>
+        // Загружаем задачи при загрузке страницы (без обязательной авторизации)
+        window.addEventListener('load', () => {
+            renderTasks();
+            updateFindButton();
+        });
+
+        // Обновляем кнопку при изменении авторизации
+        function updateFindButton() {
+            const currentUser = getCurrentUser();
+            const findMentorButton = document.getElementById('findMentorButton');
+            if (findMentorButton) {
+                if (currentUser && (currentUser.role === 'mentor' || currentUser.role === 'student')) {
+                    findMentorButton.textContent = 'Найти задачу';
+                    findMentorButton.href = '/catalog.html';
+                } else {
+                    findMentorButton.textContent = 'Найти ментора';
+                    findMentorButton.href = '/mentors.html';
+                }
+            }
+        }
+
+        // Обновляем кнопку после авторизации
+        const originalUpdateNavigation = window.updateNavigation;
+        if (typeof originalUpdateNavigation === 'function') {
+            window.updateNavigation = function() {
+                originalUpdateNavigation();
+                setTimeout(updateFindButton, 100); // Небольшая задержка для гарантии
+            };
+        }
+    </script>
+</body>
+
+</html>
